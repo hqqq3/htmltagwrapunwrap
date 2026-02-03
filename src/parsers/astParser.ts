@@ -40,7 +40,7 @@ export function deleteTagUsingAST(document: vscode.TextDocument, position: vscod
     const edit = new vscode.WorkspaceEdit();
     edit.delete(document.uri, new vscode.Range(startPos, endPos));
     vscode.workspace.applyEdit(edit);
-    outputChannel.appendLine(`已删除标签及其内容: <${tagName}>`);
+    outputChannel.appendLine(`Deleted tag and its content: <${tagName}>`);
 
     return true;
   } catch (e) {

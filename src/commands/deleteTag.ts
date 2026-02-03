@@ -19,7 +19,7 @@ export function registerDeleteTagCommand(outputChannel: vscode.OutputChannel): v
         if (!success) {
           const regexSuccess = await deleteTagUsingRegex(document, position, outputChannel);
           if (!regexSuccess) {
-            vscode.window.showWarningMessage('未找到光标所在的标签');
+            vscode.window.showWarningMessage('No tag found at cursor position');
           }
         }
       } else {
@@ -27,7 +27,7 @@ export function registerDeleteTagCommand(outputChannel: vscode.OutputChannel): v
       }
     } catch (error) {
       console.error(error);
-      vscode.window.showErrorMessage('删除标签失败');
+      vscode.window.showErrorMessage('Failed to delete tag');
     }
   });
 }

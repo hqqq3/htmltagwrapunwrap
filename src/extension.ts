@@ -11,9 +11,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   const wrapTagCommand = vscode.commands.registerCommand('htmltagwrapunwrap.wrapTag', async () => {
     console.log('wrapTag command triggered');
-    outputChannel.appendLine('包裹标签命令已触发');
+    outputChannel.appendLine('Wrap tag command triggered');
     outputChannel.show();
-    vscode.window.showWarningMessage('包裹标签命令已触发');
+    vscode.window.showWarningMessage('Wrap tag command triggered');
   });
 
   context.subscriptions.push(deleteTagCommand, wrapTagCommand);

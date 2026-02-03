@@ -6,14 +6,14 @@ export async function deleteTagUsingRegex(document: vscode.TextDocument, positio
 
   const lastTagStart = textBeforeCursor.lastIndexOf('<');
   if (lastTagStart === -1) {
-    vscode.window.showWarningMessage('未找到标签');
+    vscode.window.showWarningMessage('No tag found');
     return false;
   }
 
   const tagContent = lineText.substring(lastTagStart);
   const tagNameMatch = tagContent.match(/^<([^\s>\/]+)/);
   if (!tagNameMatch) {
-    vscode.window.showWarningMessage('无效的标签格式');
+    vscode.window.showWarningMessage('Invalid tag format');
     return false;
   }
 
@@ -27,13 +27,13 @@ export async function deleteTagUsingRegex(document: vscode.TextDocument, positio
     const edit = new vscode.WorkspaceEdit();
     edit.delete(document.uri, new vscode.Range(startPos, endPos));
     await vscode.workspace.applyEdit(edit);
-    outputChannel.appendLine(`已删除自闭合标签: <${tagName} />`);
+    outputChannel.appendLine(`Deleted self-closing tag: <${tagName} />`);
     return true;
   }
 
   const openTagEndPos = lineText.indexOf('>', lastTagStart);
   if (openTagEndPos === -1) {
-    vscode.window.showWarningMessage('未找到标签结束位置');
+    vscode.window.showWarningMessage('Tag end position not found');
     return false;
   }
 
@@ -77,14 +77,14 @@ export async function deleteTagUsingRegex(document: vscode.TextDocument, positio
   }
 
   if (!closeTagStartPos || !closeTagEndPos) {
-    vscode.window.showWarningMessage('未找到匹配的结束标签');
+    vscode.window.showWarningMessage('No matching closing tag found');
     return false;
   }
 
   const edit = new vscode.WorkspaceEdit();
   edit.delete(document.uri, new vscode.Range(openTagStartPos, closeTagEndPos));
   await vscode.workspace.applyEdit(edit);
-  outputChannel.appendLine(`已删除标签及其内容: <${tagName}>...</${tagName}>`);
+  outputChannel.appendLine(`Deleted tag and its content: <${tagName}>...</${tagName}>`);
 
   return true;
 }
