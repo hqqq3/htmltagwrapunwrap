@@ -47,3 +47,45 @@ export function deleteTagUsingAST(document: vscode.TextDocument, position: vscod
     return false;
   }
 }
+
+export function getJSXElementAtCursor(document: vscode.TextDocument, position: vscode.Position): { text: string; range: vscode.Range } | null {
+  const cursorOffset = document.offsetAt(position);
+  const code = document.getText();
+
+  try {
+    const ast = parser.parse(code, {
+      sourceType: 'module',
+      plugins: ['jsx', 'typescript']
+    });
+
+    let smallestStart = -1;
+    let smallestEnd = -1;
+
+    traverse(ast, {
+      JSXElement(path) {
+        const node = path.node as any;
+        const startOffset = node.start;
+        const endOffset = node.end;
+
+        if (cursorOffset >= startOffset && cursorOffset <= endOffset) {
+          if (smallestStart === -1 || (endOffset - startOffset) < (smallestEnd - smallestStart)) {
+            smallestStart = startOffset;
+            smallestEnd = endOffset;
+          }
+        }
+      }
+    });
+
+    if (smallestStart === -1) {
+      return null;
+    }
+
+    const startPos = document.positionAt(smallestStart);
+    const endPos = document.positionAt(smallestEnd);
+    const text = document.getText(new vscode.Range(startPos, endPos));
+
+    return { text, range: new vscode.Range(startPos, endPos) };
+  } catch (e) {
+    return null;
+  }
+}

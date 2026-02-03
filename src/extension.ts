@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { registerDeleteTagCommand } from './commands/deleteTag';
+import { registerWrapTagCommand } from './commands/wrapTag';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('HTML Tag Wrap Unwrap 插件已激活');
@@ -8,13 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(outputChannel);
 
   const deleteTagCommand = registerDeleteTagCommand(outputChannel);
-
-  const wrapTagCommand = vscode.commands.registerCommand('htmltagwrapunwrap.wrapTag', async () => {
-    console.log('wrapTag command triggered');
-    outputChannel.appendLine('Wrap tag command triggered');
-    outputChannel.show();
-    vscode.window.showWarningMessage('Wrap tag command triggered');
-  });
+  const wrapTagCommand = registerWrapTagCommand(outputChannel);
 
   context.subscriptions.push(deleteTagCommand, wrapTagCommand);
   console.log('命令已注册');
