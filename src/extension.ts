@@ -1,0 +1,23 @@
+import * as vscode from 'vscode';
+import { registerDeleteTagCommand } from './commands/deleteTag';
+
+export function activate(context: vscode.ExtensionContext) {
+  console.log('HTML Tag Wrap Unwrap 插件已激活');
+
+  const outputChannel = vscode.window.createOutputChannel('HTML Tag Wrap Unwrap');
+  context.subscriptions.push(outputChannel);
+
+  const deleteTagCommand = registerDeleteTagCommand(outputChannel);
+
+  const wrapTagCommand = vscode.commands.registerCommand('htmltagwrapunwrap.wrapTag', async () => {
+    console.log('wrapTag command triggered');
+    outputChannel.appendLine('包裹标签命令已触发');
+    outputChannel.show();
+    vscode.window.showWarningMessage('包裹标签命令已触发');
+  });
+
+  context.subscriptions.push(deleteTagCommand, wrapTagCommand);
+  console.log('命令已注册');
+}
+
+export function deactivate() {}
