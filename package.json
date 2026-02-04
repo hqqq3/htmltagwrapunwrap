@@ -2,7 +2,7 @@
   "name": "htmltagwrapunwrap",
   "displayName": "HTML Tag Wrap Unwrap",
   "description": "HTML标签包裹和删除工具",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "hqqq",
   "engines": {
     "vscode": "^1.80.0"
@@ -18,7 +18,11 @@
     "commands": [
       {
         "command": "htmltagwrapunwrap.deleteTag",
-        "title": "删除标签"
+        "title": "删除标签（不删除内容）"
+      },
+      {
+        "command": "htmltagwrapunwrap.deleteTagWithContent",
+        "title": "删除标签和内容"
       },
       {
         "command": "htmltagwrapunwrap.wrapTag",
@@ -29,6 +33,10 @@
       {
         "command": "htmltagwrapunwrap.deleteTag",
         "key": "alt+d"
+      },
+      {
+        "command": "htmltagwrapunwrap.deleteTagWithContent",
+        "key": "alt+shift+d"
       },
       {
         "command": "htmltagwrapunwrap.wrapTag",

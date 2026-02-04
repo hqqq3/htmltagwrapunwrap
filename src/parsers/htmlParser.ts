@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-export async function deleteTagUsingRegex(document: vscode.TextDocument, position: vscode.Position, outputChannel: vscode.OutputChannel): Promise<boolean> {
+export async function deleteTagUsingRegex(document: vscode.TextDocument, position: vscode.Position, outputChannel: vscode.OutputChannel, deleteContent: boolean = false): Promise<boolean> {
   const lineText = document.lineAt(position).text;
   const textBeforeCursor = lineText.substring(0, position.character);
 
@@ -82,9 +82,17 @@ export async function deleteTagUsingRegex(document: vscode.TextDocument, positio
   }
 
   const edit = new vscode.WorkspaceEdit();
-  edit.delete(document.uri, new vscode.Range(openTagStartPos, closeTagEndPos));
+
+  if (deleteContent) {
+    edit.delete(document.uri, new vscode.Range(openTagStartPos, closeTagEndPos));
+    outputChannel.appendLine(`Deleted tag and its content: <${tagName}>...</${tagName}>`);
+  } else {
+    edit.delete(document.uri, new vscode.Range(openTagStartPos, openTagEndPosition));
+    edit.delete(document.uri, new vscode.Range(closeTagStartPos, closeTagEndPos));
+    outputChannel.appendLine(`Deleted tag: <${tagName}>...</${tagName}>`);
+  }
+
   await vscode.workspace.applyEdit(edit);
-  outputChannel.appendLine(`Deleted tag and its content: <${tagName}>...</${tagName}>`);
 
   return true;
 }

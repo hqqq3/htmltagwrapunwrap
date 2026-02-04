@@ -2,7 +2,7 @@ import * as parser from '@babel/parser';
 import traverse from '@babel/traverse';
 import * as vscode from 'vscode';
 
-export function deleteTagUsingAST(document: vscode.TextDocument, position: vscode.Position, outputChannel: vscode.OutputChannel): boolean {
+export function deleteTagUsingAST(document: vscode.TextDocument, position: vscode.Position, outputChannel: vscode.OutputChannel, deleteContent: boolean = false): boolean {
   const cursorOffset = document.offsetAt(position);
   const code = document.getText();
 
@@ -33,14 +33,34 @@ export function deleteTagUsingAST(document: vscode.TextDocument, position: vscod
       return false;
     }
 
-    const startPos = document.positionAt(smallestRange.start);
-    const endPos = document.positionAt(smallestRange.end);
+    const edit = new vscode.WorkspaceEdit();
     const tagName = (foundElement.openingElement.name as any).name || 'Fragment';
 
-    const edit = new vscode.WorkspaceEdit();
-    edit.delete(document.uri, new vscode.Range(startPos, endPos));
+    if (deleteContent) {
+      const startPos = document.positionAt(smallestRange.start);
+      const endPos = document.positionAt(smallestRange.end);
+      edit.delete(document.uri, new vscode.Range(startPos, endPos));
+      outputChannel.appendLine(`Deleted tag and its content: <${tagName}>`);
+    } else {
+      const openingStart = (foundElement.openingElement as any).start;
+      const openingEnd = (foundElement.openingElement as any).end;
+      const closingStart = (foundElement.closingElement as any)?.start;
+      const closingEnd = (foundElement.closingElement as any)?.end;
+
+      const openingStartPos = document.positionAt(openingStart);
+      const openingEndPos = document.positionAt(openingEnd);
+      edit.delete(document.uri, new vscode.Range(openingStartPos, openingEndPos));
+
+      if (closingStart !== undefined && closingEnd !== undefined) {
+        const closingStartPos = document.positionAt(closingStart);
+        const closingEndPos = document.positionAt(closingEnd);
+        edit.delete(document.uri, new vscode.Range(closingStartPos, closingEndPos));
+      }
+
+      outputChannel.appendLine(`Deleted tag: <${tagName}>`);
+    }
+
     vscode.workspace.applyEdit(edit);
-    outputChannel.appendLine(`Deleted tag and its content: <${tagName}>`);
 
     return true;
   } catch (e) {
