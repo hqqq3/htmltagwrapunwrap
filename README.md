@@ -1,94 +1,102 @@
 # HTML Tag Wrap Unwrap
 
-VS Code 插件，用于 HTML 标签的包裹和删除操作。
+A VS Code extension for wrapping and deleting HTML tags.
 
-## 功能
+## Features
 
-- **删除标签 (Alt + D)**: 删除光标所在的 HTML/JSX 标签及其内容
-- **包裹标签 (Alt + W)**: 用 `<div>` 标签包裹选中的文本或整个 JSX 元素
+- **Delete Tag (Alt + D)**: Delete the HTML/JSX tag at cursor position (keep content)
+- **Delete Tag and Content (Alt + Shift + D)**: Delete the HTML/JSX tag and its content
+- **Wrap Tag (Alt + W)**: Wrap selected text or entire JSX element with `<div>` tag
 
-## 安装
+## Installation
 
-### 从 VSIX 安装
+### Install from VSIX
 
-1. 下载最新的 `.vsix` 文件
-2. 打开 VS Code
-3. 按 `Cmd + Shift + P` (Mac) 或 `Ctrl + Shift + P` (Windows/Linux)
-4. 输入 "Install from VSIX..."
-5. 选择下载的 `.vsix` 文件
+1. Download the latest `.vsix` file
+2. Open VS Code
+3. Press `Cmd + Shift + P` (Mac) or `Ctrl + Shift + P` (Windows/Linux)
+4. Type "Install from VSIX..."
+5. Select the downloaded `.vsix` file
 
-### 使用 Makefile 安装
+### Install with Makefile
 
 ```bash
 make install
 ```
 
-## 使用方法
+## Usage
 
-### 删除标签
+### Delete Tag (Keep Content)
 
-1. 将光标放在要删除的标签上
-2. 按 `Alt + D`
-3. 标签及其内容将被删除
+1. Place cursor on the tag you want to delete
+2. Press `Alt + D`
+3. Tag will be deleted, content remains
 
-### 包裹标签
+### Delete Tag and Content
 
-1. 选中要包裹的文本，或将光标放在 JSX 元素上
-2. 按 `Alt + W`
-3. 选中的内容或整个 JSX 元素将被包裹在 `<div>` 标签中
+1. Place cursor on the tag you want to delete
+2. Press `Alt + Shift + D`
+3. Tag and its content will be deleted
 
-## 快捷键
+### Wrap Tag
 
-| 快捷键 | 功能 |
-|--------|------|
-| `Alt + D` | 删除标签 |
-| `Alt + W` | 包裹标签 |
+1. Select text to wrap, or place cursor on a JSX element
+2. Press `Alt + W`
+3. Selected content or entire JSX element will be wrapped with `<div>` tag
 
-## 开发
+## Keybindings
 
-### 环境要求
+| Keybinding | Action |
+|------------|--------|
+| `Alt + D` | Delete Tag (Keep Content) |
+| `Alt + Shift + D` | Delete Tag and Content |
+| `Alt + W` | Wrap Tag |
+
+## Development
+
+### Requirements
 
 - Node.js
 - npm
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 编译
+### Compile
 
 ```bash
 npm run compile
 ```
 
-### 调试
+### Debug
 
-1. 按 `F5` 启动扩展开发宿主
-2. 在新的 VS Code 窗口中测试功能
+1. Press `F5` to launch Extension Development Host
+2. Test functionality in the new VS Code window
 
-### 使用 Makefile
+### Makefile Commands
 
 ```bash
-make compile    # 编译 TypeScript
-make package    # 打包为 .vsix 文件
-make install    # 安装到 VS Code
-make clean      # 清理编译产物
-make all        # 完整流程：编译 -> 打包 -> 安装
+make compile    # Compile TypeScript
+make package    # Package as .vsix file
+make install    # Install to VS Code
+make clean      # Clean build artifacts
+make all        # Full workflow: compile -> package -> install
 ```
 
-## 项目结构
+## Project Structure
 
 ```
 src/
-├── commands/       # 命令实现
-│   ├── deleteTag.ts    # 删除标签命令
-│   └── wrapTag.ts      # 包裹标签命令
-├── parsers/        # 解析逻辑
-│   ├── astParser.ts    # JSX/TSX AST 解析
-│   └── htmlParser.ts   # HTML 正则解析
-└── extension.ts    # 扩展入口
+├── commands/       # Command implementations
+│   ├── deleteTag.ts    # Delete tag command
+│   └── wrapTag.ts      # Wrap tag command
+├── parsers/        # Parsing logic
+│   ├── astParser.ts    # JSX/TSX AST parsing
+│   └── htmlParser.ts   # HTML regex parsing
+└── extension.ts    # Extension entry point
 ```
 
 ## License

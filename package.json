@@ -2,7 +2,7 @@
   "name": "htmltagwrapunwrap",
   "displayName": "HTML Tag Wrap Unwrap",
   "description": "HTML标签包裹和删除工具",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/hqqq3/htmltagwrapunwrap"
