@@ -12,7 +12,7 @@ A VS Code extension for wrapping and deleting HTML tags.
 
 ### Install from VSIX
 
-1. Download the latest `.vsix` file
+1. Download the latest `.vsix` file from https://github.com/hqqq3/htmltagwrapunwrap/releases
 2. Open VS Code
 3. Press `Cmd + Shift + P` (Mac) or `Ctrl + Shift + P` (Windows/Linux)
 4. Type "Install from VSIX..."
