@@ -11,7 +11,7 @@ package: compile
 # 安装扩展到 VS Code
 install: package
 	code --install-extension htmltagwrapunwrap-*.vsix
-
+	trae --install-extension htmltagwrapunwrap-*.vsix
 # 清理编译产物和打包文件
 clean:
 	rm -rf out/
