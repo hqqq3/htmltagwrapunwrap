@@ -12,10 +12,11 @@ package: compile
 install: package
 	code --install-extension htmltagwrapunwrap-*.vsix
 	trae --install-extension htmltagwrapunwrap-*.vsix
+	/Applications/Trae\ CN.app/Contents/Resources/app/bin/trae --install-extension htmltagwrapunwrap-*.vsix
 # 清理编译产物和打包文件
 clean:
 	rm -rf out/
 	rm -f htmltagwrapunwrap-*.vsix
 
-# 完整流程：编译 -> 打包 -> 安装
-all: install
+# 完整流程：清理 -> 编译 -> 打包 -> 安装
+all: clean compile package install
