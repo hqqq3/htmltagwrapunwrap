@@ -3,6 +3,7 @@
   "displayName": "HTML Tag Wrap Unwrap",
   "description": "HTML标签包裹和删除工具",
   "version": "0.0.1",
+  "publisher": "hqqq",
   "engines": {
     "vscode": "^1.80.0"
   },
